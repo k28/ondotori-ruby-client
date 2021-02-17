@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/ondotori/ruby/client/version"
+require_relative "lib/ondotori/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "ondotori-ruby-client"
-  spec.version       = Ondotori::Ruby::Client::VERSION
+  spec.version       = Ondotori::VERSION
   spec.authors       = ["Kazuya Hatano"]
   spec.email         = ["k28@me.com"]
 

@@ -11,3 +11,47 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 250
+
+
+Layout/LineLength:
+  Max: 128
+
+Style/Documentation:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - lib/ondotori-web-client.rb  
+
+
+# Offense count: 14
+# Configuration parameters: CountComments, ExcludedMethods.
+Metrics/MethodLength:
+  Max: 32
+
+# Offence count: 10
+Metrics/AbcSize:
+  Max: 39
+  Exclude:
+    - test/ondotori/webapi/client_test.rb
+
+Style/RedundantInterpolation:
+  Enabled: false
+
+
+
