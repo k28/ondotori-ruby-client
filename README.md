@@ -16,7 +16,56 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Create API Key
+
+The first step is to create an API key.
+
+- [おんどとり Web Storage](https://ondotori.webstorage.jp/account/create-apikey.php)
+- [T&D WebStorage Service](https://www.webstorage-service.com/account/create-apikey.php)
+
+### Web Client
+
+#### Web Client Examples
+
+```
+params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
+client = Ondotori::WebAPI::Client.new(params)
+```
+
+| key        | value                             |
+|------------|-----------------------------------|
+| api-key    | API Key                           |
+| login-id   | Read-only IDs are also available. |
+| login-pass | password                          |
+
+
+#### Get Current Readings
+
+To get current readings, do the following.
+
+```
+params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
+client = Ondotori::WebAPI::Client.new(params)
+response = client.current()
+```
+
+#### Error Handling
+
+Ondotori Errors
+
+In case of parameter abnormality or error returned from the web server, the error will be raised.
+For example, to receive an authentication error from the server, use the following.
+```
+rescue Ondotori::WebAPI::Api::Errors::ResponseError => e
+  # puts "Response error #{e.messaeg}"
+end
+```
+All of these errors inherit from `Ondotori::WebAPI::Api::Errors::Error`, so you can handle or silence all errors if necessary:
+```
+rescue Ondotori::WebAPI::Api::Errors::Error => e
+  # puts "Response error #{e.messaeg}"
+end
+```
 
 ## Development
 
