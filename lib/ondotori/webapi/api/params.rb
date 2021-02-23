@@ -29,12 +29,13 @@ module Ondotori
       end
 
       class LatestDataParams
-        def initialize(_param, serial)
+        def initialize(param, serial: "")
           if serial.empty?
             raise Ondotori::WebAPI::Api::Errors::InvaildParameter.new(
-              "latest-data need remote-serial", 9998
+              "latest-data need remote-serial", 9994
             )
           end
+          @param = param
           @remote_serial = serial
         end
 

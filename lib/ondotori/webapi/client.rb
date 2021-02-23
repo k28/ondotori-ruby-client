@@ -17,6 +17,13 @@ module Ondotori
         ondotori_response.result
       end
 
+      def latest_data(serial)
+        param = Api::LatestDataParams.new(@param, serial: serial)
+        response = @web_access.access("#{base_uri}latest-data", param.to_ondotori_param)
+        ondotori_response = Ondotori::WebAPI::Api::Response.new(response)
+        ondotori_response.result
+      end
+
       def base_uri
         return @uri unless @uri.empty?
 
