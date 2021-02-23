@@ -58,6 +58,16 @@ client = Ondotori::WebAPI::Client.new(params)
 response = client.latest_data("SERIAL")
 ```
 
+#### Get Latest Data RTR500
+
+To get latest data (RTR500), do the following.
+
+```
+params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
+client = Ondotori::WebAPI::Client.new(params)
+response = client.latest_data_rtr500(base: "BaseUnit Serial", remote: "RemoteUnit Serial")
+```
+
 #### Error Handling
 
 Ondotori Errors
