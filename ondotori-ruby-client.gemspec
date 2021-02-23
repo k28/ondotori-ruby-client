@@ -9,9 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["k28@me.com"]
 
   spec.summary       = "T&D WebStorage API Client"
-  spec.description   = <<-TXT.gsub(/^ +/, '')
-    You can use this gem to get the recorded data from WebStorage.
-  TXT
+  spec.description   = "You can use this gem to get the recorded data from WebStorage."
   spec.homepage      = "https://github.com/k28/ondotori-ruby-client"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
