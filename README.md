@@ -48,6 +48,15 @@ params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pas
 client = Ondotori::WebAPI::Client.new(params)
 response = client.current()
 ```
+#### Get Latest Data
+
+To get latest data, do the following.
+
+```
+params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
+client = Ondotori::WebAPI::Client.new(params)
+response = client.latest_data("SERIAL")
+```
 
 #### Error Handling
 
