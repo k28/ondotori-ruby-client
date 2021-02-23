@@ -36,7 +36,7 @@ Style/GuardClause:
 
 Naming/FileName:
   Exclude:
-    - lib/ondotori-web-client.rb  
+    - lib/ondotori-ruby-client.rb  
 
 
 # Offense count: 14
