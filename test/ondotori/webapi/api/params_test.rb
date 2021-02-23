@@ -39,7 +39,31 @@ module Ondotori
         end
       end
 
-      class CurrentParamsTest < Minitest::Test
+      class LatestDataParamsTest < Minitest::Test
+        def test_success
+          param = Ondotori::WebAPI::Api::LatestDataParams.new(ParamsTest.make_param, serial: "SE12345")
+          refute_nil param
+        end
+
+        def test_failure
+          e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
+            Ondotori::WebAPI::Api::LatestDataParams.new(ParamsTest.make_param, serial: "")
+          end
+
+          assert_equal 9994, e.code
+        end
+
+        def test_to_ondotori_param
+          p = ParamsTest.make_param
+          param = Ondotori::WebAPI::Api::LatestDataParams.new(p, serial: "SE12345")
+          ondo_param = param.to_ondotori_param
+
+          refute_nil ondo_param
+          assert_equal p.api_key, ondo_param["api-key"]
+          assert_equal p.login_id, ondo_param["login-id"]
+          assert_equal p.login_pass, ondo_param["login-pass"]
+          assert_equal "SE12345", ondo_param["remote-serial"]
+        end
       end
     end
   end
