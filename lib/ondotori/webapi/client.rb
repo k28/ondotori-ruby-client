@@ -24,6 +24,13 @@ module Ondotori
         ondotori_response.result
       end
 
+      def latest_data_rtr500(base: "", remote: "")
+        param = Api::LatestDataRTR500Params.new(@param, base: base, remote: remote)
+        response = @web_access.access("#{base_uri}latest-data-rtr500", param.to_ondotori_param)
+        ondotori_response = Ondotori::WebAPI::Api::Response.new(response)
+        ondotori_response.result
+      end
+
       def base_uri
         return @uri unless @uri.empty?
 
