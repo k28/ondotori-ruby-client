@@ -73,6 +73,38 @@ module Ondotori
           params
         end
       end
+
+      class DataParams
+        def initialize(param, from: nil, to: nil, limit: nil)
+          validate(from, to, limit)
+          @param = param
+          @from = from
+          @to = to
+          @limit = limit.nil? ? 0 : [0, limit].max
+        end
+
+        def validate(from, to, _limit)
+          [from, to].each do |param|
+            next if param.nil? || param.instance_of?(Time)
+
+            raise Ondotori::WebAPI::Api::Errors::InvaildParameter.new(
+              "from and to parameter must be nil or Time.", 9992
+            )
+          end
+        end
+
+        def to_ondotori_param
+          params = {}
+          params[Api::Param::API_KEY] = @param.api_key
+          params[Api::Param::LOGIN_ID] = @param.login_id
+          params[Api::Param::LOGIN_PASS] = @param.login_pass
+          params["unixtime-from"] = @from.to_i unless @from.nil?
+          params["unixtime-to"] = @to.to_i unless @to.nil?
+          params["number"] = @limit if @limit != 0
+
+          params
+        end
+      end
     end
   end
 end
