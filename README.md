@@ -68,6 +68,20 @@ client = Ondotori::WebAPI::Client.new(params)
 response = client.latest_data_rtr500(base: "BaseUnit Serial", remote: "RemoteUnit Serial")
 ```
 
+#### Get Data (TR-7wb/nw/wf, TR4)
+
+To get data (TR-7wb/nw/wf, TR4), do the following.
+
+```
+from = Time.now - (3600 * 24)
+to   = Time.now
+limit = 173
+params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
+client = Ondotori::WebAPI::Client.new(params)
+response = client.data("Device Serial", from: from, to: to, limit: limit)
+```
+from, to and limit parameter is optional.
+
 #### Error Handling
 
 Ondotori Errors
