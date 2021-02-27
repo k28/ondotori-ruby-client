@@ -123,6 +123,25 @@ module Ondotori
         client.latest_data_rtr500(base: "BA1234", remote: "SE1234")
       end
 
+      def test_data
+        from = Time.now - (3600 * 24)
+        to   = Time.now
+        limit = 173
+        client_params = make_client_params
+        stb_access = Ondotori::WebAPI::StbWebAccess.new(30, lambda { |access|
+          assert_equal client_params["api-key"], access.params["api-key"]
+          assert_equal client_params["login-id"], access.params["login-id"]
+          assert_equal client_params["login-pass"], access.params["login-pass"]
+          assert_equal "SE1234", access.params["remote-serial"]
+          assert_equal from.to_i, access.params["unixtime-from"]
+          assert_equal to.to_i, access.params["unixtime-to"]
+          assert_equal limit, access.params["number"]
+          make_success_response
+        })
+        client = make_test_client(stb_access)
+        client.data("SE1234", from: from, to: to, limit: limit)
+      end
+
       def make_success_response
         body = %({"devices" : []})
         mock = Minitest::Mock.new

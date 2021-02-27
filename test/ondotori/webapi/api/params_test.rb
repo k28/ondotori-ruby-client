@@ -104,7 +104,7 @@ module Ondotori
 
       class DataParamsTest < Minitest::Test
         def test_success
-          param = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param)
+          param = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE11234")
           refute_nil param
         end
 
@@ -112,7 +112,7 @@ module Ondotori
           from  = Time.now - (3600 * 24)
           to    = Time.now
           limit = 1000
-          param = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, from: from, to: to, limit: limit)
+          param = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE11234", from: from, to: to, limit: limit)
           refute_nil param
         end
 
@@ -120,19 +120,24 @@ module Ondotori
           time = Time.now
           limit = 1000
           e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
-            _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, from: "", to: time, limit: limit)
+            _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE1234", from: "", to: time, limit: limit)
           end
           assert_equal 9992, e.code
 
           e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
-            _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, from: time, to: "", limit: limit)
+            _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE1234", from: time, to: "", limit: limit)
           end
           assert_equal 9992, e.code
+
+          e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
+            _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, 1234)
+          end
+          assert_equal 9991, e.code
         end
 
         def test_to_ondotori_param
           p = ParamsTest.make_param
-          param = Ondotori::WebAPI::Api::DataParams.new(p)
+          param = Ondotori::WebAPI::Api::DataParams.new(p, "SE23456")
 
           ondo_param = param.to_ondotori_param
 
@@ -140,6 +145,7 @@ module Ondotori
           assert_equal p.api_key, ondo_param["api-key"]
           assert_equal p.login_id, ondo_param["login-id"]
           assert_equal p.login_pass, ondo_param["login-pass"]
+          assert_equal "SE23456", ondo_param["remote-serial"]
           assert_nil ondo_param["from"]
           assert_nil ondo_param["to"]
           assert_nil ondo_param["limit"]
@@ -150,7 +156,7 @@ module Ondotori
           from = Time.now - (3600 * 24)
           to   = Time.now
           limit = 173
-          param = Ondotori::WebAPI::Api::DataParams.new(p, from: from, to: to, limit: limit)
+          param = Ondotori::WebAPI::Api::DataParams.new(p, "SE1234", from: from, to: to, limit: limit)
 
           ondo_param = param.to_ondotori_param
 
@@ -158,6 +164,7 @@ module Ondotori
           assert_equal p.api_key, ondo_param["api-key"]
           assert_equal p.login_id, ondo_param["login-id"]
           assert_equal p.login_pass, ondo_param["login-pass"]
+          assert_equal "SE1234", ondo_param["remote-serial"]
           assert_equal from.to_i, ondo_param["unixtime-from"]
           assert_equal to.to_i, ondo_param["unixtime-to"]
           assert_equal limit, ondo_param["number"]
