@@ -31,6 +31,13 @@ module Ondotori
         ondotori_response.result
       end
 
+      def data(serial, from: nil, to: nil, limit: nil)
+        param = Api::DataParams.new(@param, serial, from: from, to: to, limit: limit)
+        response = @web_access.access("#{base_uri}data", param.to_ondotori_param)
+        ondotori_response = Ondotori::WebAPI::Api::Response.new(response)
+        ondotori_response.result
+      end
+
       def base_uri
         return @uri unless @uri.empty?
 
