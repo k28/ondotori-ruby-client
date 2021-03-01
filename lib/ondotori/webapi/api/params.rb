@@ -115,6 +115,29 @@ module Ondotori
           params
         end
       end
+
+      class DataRTR500Params < DataParams
+        def initialize(param, serial, base, from: nil, to: nil, limit: nil)
+          super(param, serial, from: from, to: to, limit: limit)
+          validate_base(base)
+          @base =  base
+        end
+
+        def validate_base(base)
+          unless base.instance_of?(String)
+            raise Ondotori::WebAPI::Api::Errors::InvaildParameter.new(
+              "base unit serial must be String.", 9991
+            )
+          end
+        end
+
+        def to_ondotori_param
+          params = super
+          params["base-serial"] = @base
+
+          params
+        end
+      end
     end
   end
 end
