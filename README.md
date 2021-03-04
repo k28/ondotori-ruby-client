@@ -69,7 +69,7 @@ To get data (TR-7wb/nw/wf, TR4), do the following.
 ```
 from = Time.now - (3600 * 24)
 to   = Time.now
-limit = 173
+limit = 16000
 data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: 10)
 response = client.data("Device Serial", data_range: data_range)
 ```
@@ -82,7 +82,7 @@ To get data (RTR500 Series), do the following.
 ```
 from = Time.now - (3600 * 24)
 to   = Time.now
-limit = 173
+limit = 16000
 data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: 10)
 response = client.data_rtr500(base: "BaseUnit Serial", remote: "Device Serial", data_range: data_range)
 ```
