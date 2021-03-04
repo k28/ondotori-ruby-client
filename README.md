@@ -1,3 +1,5 @@
+[![Ruby](https://github.com/k28/ondotori-ruby-client/actions/workflows/main.yml/badge.svg)](https://github.com/k28/ondotori-ruby-client/actions/workflows/main.yml)
+
 ## Installation
 
 Add this line to your application's Gemfile:
