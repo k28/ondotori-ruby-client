@@ -85,6 +85,7 @@ module Ondotori
       def test_current_params_base_serial
         client_params = make_client_params
         stb_access = Ondotori::WebAPI::StbWebAccess.new(30, lambda { |access|
+          assert_equal "https://api.webstorage.jp/v1/devices/current", access.uri
           assert_equal client_params["api-key"], access.params["api-key"]
           assert_equal client_params["login-id"], access.params["login-id"]
           assert_equal client_params["login-pass"], access.params["login-pass"]
@@ -99,6 +100,7 @@ module Ondotori
       def test_latest_data
         client_params = make_client_params
         stb_access = Ondotori::WebAPI::StbWebAccess.new(30, lambda { |access|
+          assert_equal "https://api.webstorage.jp/v1/devices/latest-data", access.uri
           assert_equal client_params["api-key"], access.params["api-key"]
           assert_equal client_params["login-id"], access.params["login-id"]
           assert_equal client_params["login-pass"], access.params["login-pass"]
@@ -112,6 +114,7 @@ module Ondotori
       def test_latest_data_rtr500
         client_params = make_client_params
         stb_access = Ondotori::WebAPI::StbWebAccess.new(30, lambda { |access|
+          assert_equal "https://api.webstorage.jp/v1/devices/latest-data-rtr500", access.uri
           assert_equal client_params["api-key"], access.params["api-key"]
           assert_equal client_params["login-id"], access.params["login-id"]
           assert_equal client_params["login-pass"], access.params["login-pass"]
@@ -127,8 +130,10 @@ module Ondotori
         from = Time.now - (3600 * 24)
         to   = Time.now
         limit = 173
+        data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: limit)
         client_params = make_client_params
         stb_access = Ondotori::WebAPI::StbWebAccess.new(30, lambda { |access|
+          assert_equal "https://api.webstorage.jp/v1/devices/data", access.uri
           assert_equal client_params["api-key"], access.params["api-key"]
           assert_equal client_params["login-id"], access.params["login-id"]
           assert_equal client_params["login-pass"], access.params["login-pass"]
@@ -139,7 +144,29 @@ module Ondotori
           make_success_response
         })
         client = make_test_client(stb_access)
-        client.data("SE1234", from: from, to: to, limit: limit)
+        client.data("SE1234", data_range: data_range)
+      end
+
+      def test_data_rtr500
+        from = Time.now - (3600 * 24)
+        to   = Time.now
+        limit = 173
+        data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: limit)
+        client_params = make_client_params
+        stb_access = Ondotori::WebAPI::StbWebAccess.new(30, lambda { |access|
+          assert_equal "https://api.webstorage.jp/v1/devices/data-rtr500", access.uri
+          assert_equal client_params["api-key"], access.params["api-key"]
+          assert_equal client_params["login-id"], access.params["login-id"]
+          assert_equal client_params["login-pass"], access.params["login-pass"]
+          assert_equal "BS1234", access.params["base-serial"]
+          assert_equal "SE1234", access.params["remote-serial"]
+          assert_equal from.to_i, access.params["unixtime-from"]
+          assert_equal to.to_i, access.params["unixtime-to"]
+          assert_equal limit, access.params["number"]
+          make_success_response
+        })
+        client = make_test_client(stb_access)
+        client.data_rtr500(base: "BS1234", remote: "SE1234", data_range: data_range)
       end
 
       def make_success_response

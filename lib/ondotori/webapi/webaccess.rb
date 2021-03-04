@@ -13,14 +13,15 @@ module Ondotori
     end
 
     class StbWebAccess < WebAccess
-      attr_reader :params
+      attr_reader :params, :uri
 
       def initialize(timeout, on_access)
         super timeout
         @on_access = on_access
       end
 
-      def access(_uri, params)
+      def access(uri, params)
+        @uri = uri
         @params = params
         @on_access.call(self)
       end

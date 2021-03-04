@@ -44,6 +44,9 @@ Naming/FileName:
 Metrics/MethodLength:
   Max: 32
 
+Metrics/ParameterLists:
+  Max: 6
+
 # Offence count: 10
 Metrics/AbcSize:
   Max: 39
