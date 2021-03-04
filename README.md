@@ -44,8 +44,6 @@ client = Ondotori::WebAPI::Client.new(params)
 To get current readings, do the following.
 
 ```
-params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
-client = Ondotori::WebAPI::Client.new(params)
 response = client.current()
 ```
 #### Get Latest Data
@@ -53,8 +51,6 @@ response = client.current()
 To get latest data, do the following.
 
 ```
-params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
-client = Ondotori::WebAPI::Client.new(params)
 response = client.latest_data("SERIAL")
 ```
 
@@ -63,8 +59,6 @@ response = client.latest_data("SERIAL")
 To get latest data (RTR500), do the following.
 
 ```
-params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
-client = Ondotori::WebAPI::Client.new(params)
 response = client.latest_data_rtr500(base: "BaseUnit Serial", remote: "RemoteUnit Serial")
 ```
 
@@ -76,11 +70,23 @@ To get data (TR-7wb/nw/wf, TR4), do the following.
 from = Time.now - (3600 * 24)
 to   = Time.now
 limit = 173
-params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
-client = Ondotori::WebAPI::Client.new(params)
-response = client.data("Device Serial", from: from, to: to, limit: limit)
+data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: 10)
+response = client.data("Device Serial", data_range: data_range)
 ```
-from, to and limit parameter is optional.
+data_range parameter is optional.
+
+#### Get Data (RTR500 Series)
+
+To get data (RTR500 Series), do the following.
+
+```
+from = Time.now - (3600 * 24)
+to   = Time.now
+limit = 173
+data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: 10)
+response = client.data_rtr500(base: "BaseUnit Serial", remote: "Device Serial", data_range: data_range)
+```
+data_range parameter is optional.
 
 #### Error Handling
 

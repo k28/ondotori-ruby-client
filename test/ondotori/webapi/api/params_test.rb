@@ -112,23 +112,12 @@ module Ondotori
           from  = Time.now - (3600 * 24)
           to    = Time.now
           limit = 1000
-          param = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE11234", from: from, to: to, limit: limit)
+          data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: limit)
+          param = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE11234", data_range: data_range)
           refute_nil param
         end
 
         def test_parameter_failure
-          time = Time.now
-          limit = 1000
-          e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
-            _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE1234", from: "", to: time, limit: limit)
-          end
-          assert_equal 9992, e.code
-
-          e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
-            _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, "SE1234", from: time, to: "", limit: limit)
-          end
-          assert_equal 9992, e.code
-
           e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
             _ = Ondotori::WebAPI::Api::DataParams.new(ParamsTest.make_param, 1234)
           end
@@ -156,7 +145,8 @@ module Ondotori
           from = Time.now - (3600 * 24)
           to   = Time.now
           limit = 173
-          param = Ondotori::WebAPI::Api::DataParams.new(p, "SE1234", from: from, to: to, limit: limit)
+          data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: limit)
+          param = Ondotori::WebAPI::Api::DataParams.new(p, "SE1234", data_range: data_range)
 
           ondo_param = param.to_ondotori_param
 
@@ -178,29 +168,13 @@ module Ondotori
         end
 
         def test_success_from_to
-          from  = Time.now - (3600 * 24)
-          to    = Time.now
-          limit = 1000
-          param = Ondotori::WebAPI::Api::DataRTR500Params.new(ParamsTest.make_param, "SE11234", "BS12345", from: from, to: to,
-                                                                                                           limit: limit)
+          data_range = Ondotori::WebAPI::Api::DataRange.new
+          param = Ondotori::WebAPI::Api::DataRTR500Params.new(ParamsTest.make_param, "SE11234", "BS12345",
+                                                              data_range: data_range)
           refute_nil param
         end
 
         def test_parameter_failure
-          time = Time.now
-          limit = 1000
-          e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
-            _ = Ondotori::WebAPI::Api::DataRTR500Params.new(ParamsTest.make_param, "SE1234", "BS12345", from: "", to: time,
-                                                                                                        limit: limit)
-          end
-          assert_equal 9992, e.code
-
-          e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
-            _ = Ondotori::WebAPI::Api::DataRTR500Params.new(ParamsTest.make_param, "SE1234", "BS12345", from: time, to: "",
-                                                                                                        limit: limit)
-          end
-          assert_equal 9992, e.code
-
           e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
             _ = Ondotori::WebAPI::Api::DataRTR500Params.new(ParamsTest.make_param, 1234, "BA1234")
           end
@@ -234,7 +208,8 @@ module Ondotori
           from = Time.now - (3600 * 24)
           to   = Time.now
           limit = 173
-          param = Ondotori::WebAPI::Api::DataRTR500Params.new(p, "SE1234", "BS12345", from: from, to: to, limit: limit)
+          data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: limit)
+          param = Ondotori::WebAPI::Api::DataRTR500Params.new(p, "SE1234", "BS12345", data_range: data_range)
 
           ondo_param = param.to_ondotori_param
 

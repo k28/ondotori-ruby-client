@@ -31,9 +31,14 @@ module Ondotori
         access_server(param, "#{base_uri}latest-data-rtr500")
       end
 
-      def data(serial, from: nil, to: nil, limit: nil)
-        param = Api::DataParams.new(@param, serial, from: from, to: to, limit: limit)
+      def data(serial, data_range: nil)
+        param = Api::DataParams.new(@param, serial, data_range: data_range)
         access_server(param, "#{base_uri}data")
+      end
+
+      def data_rtr500(base: "", remote: "", data_range: nil)
+        param = Api::DataRTR500Params.new(@param, remote, base, data_range: data_range)
+        access_server(param, "#{base_uri}data-rtr500")
       end
 
       def base_uri

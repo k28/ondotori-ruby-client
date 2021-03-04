@@ -81,26 +81,17 @@ module Ondotori
       end
 
       class DataParams < ParamsBase
-        def initialize(param, serial, from: nil, to: nil, limit: nil)
+        def initialize(param, serial, data_range: nil)
           super(param)
-          validate(serial, from, to, limit)
+          validate(serial)
+          @data_range = data_range
           @serial = serial
-          @from = from
-          @to = to
-          @limit = limit.nil? ? 0 : [0, limit].max
         end
 
-        def validate(serial, from, to, _limit)
+        def validate(serial)
           unless serial.instance_of?(String)
             raise Ondotori::WebAPI::Api::Errors::InvaildParameter.new(
               "serial must be String.", 9991
-            )
-          end
-          [from, to].each do |param|
-            next if param.nil? || param.instance_of?(Time)
-
-            raise Ondotori::WebAPI::Api::Errors::InvaildParameter.new(
-              "from and to parameter must be nil or Time.", 9992
             )
           end
         end
@@ -108,17 +99,15 @@ module Ondotori
         def to_ondotori_param
           params = super
           params["remote-serial"] = @serial
-          params["unixtime-from"] = @from.to_i unless @from.nil?
-          params["unixtime-to"] = @to.to_i unless @to.nil?
-          params["number"] = @limit if @limit != 0
+          @data_range&.add_data_range(params)
 
           params
         end
       end
 
       class DataRTR500Params < DataParams
-        def initialize(param, serial, base, from: nil, to: nil, limit: nil)
-          super(param, serial, from: from, to: to, limit: limit)
+        def initialize(param, serial, base, data_range: nil)
+          super(param, serial, data_range: data_range)
           validate_base(base)
           @base =  base
         end
