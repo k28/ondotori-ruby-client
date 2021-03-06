@@ -23,7 +23,7 @@ module Ondotori
         when Net::HTTPClientError, Net::HTTPServerError
           response
         else
-          # response.value raises Eception...
+          # response.value raises Exception...
           raise Ondotori::WebAPI::Api::Errors::HttpAccessError.new("#{response.message}", "#{response.code}", 9995)
         end
       end
