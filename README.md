@@ -98,13 +98,13 @@ In case of parameter abnormality or error returned from the web server, the erro
 For example, to receive an authentication error from the server, use the following.
 ```
 rescue Ondotori::WebAPI::Api::Errors::ResponseError => e
-  # puts "Response error #{e.messaeg}"
+  # puts "Response error #{e.message}"
 end
 ```
 All of these errors inherit from `Ondotori::WebAPI::Api::Errors::Error`, so you can handle or silence all errors if necessary:
 ```
 rescue Ondotori::WebAPI::Api::Errors::Error => e
-  # puts "Response error #{e.messaeg}"
+  # puts "Response error #{e.message}"
 end
 ```
 
