@@ -35,6 +35,13 @@ def main
     return
   end
 
+  ["api-key", "login-id", "login-pass"].each do |k|
+    if params[k] == nil
+      puts "parameter #{k} is nil. Please check #{WEB_STORAGE_ACCESS_INFO_PATH}"
+      return
+    end
+  end
+
   begin
     client = Ondotori::WebAPI::Client.new(params)
     response = client.current

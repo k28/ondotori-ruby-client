@@ -18,7 +18,8 @@ module Ondotori
             if result.key?("error")
               code = result["error"]["code"]
               message = result["error"]["message"]
-              raise Ondotori::WebAPI::Api::Errors::ResponseError.new(message, code)
+              ratelimit = Ondotori::WebAPI::Api::RateLimit.new(@response)
+              raise Ondotori::WebAPI::Api::Errors::ResponseError.new(message, code, ratelimit)
             end
 
             # unknown error...

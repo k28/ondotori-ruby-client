@@ -13,7 +13,14 @@ module Ondotori
           end
         end
 
-        class ResponseError < Error; end
+        class ResponseError < Error
+          attr_reader :ratelimit
+
+          def initialize(message, code, ratelimit)
+            super message, code
+            @ratelimit = ratelimit
+          end
+        end
 
         class InitializeParameterNotFound < Error; end
 

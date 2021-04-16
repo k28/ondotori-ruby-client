@@ -19,6 +19,9 @@ module Ondotori
           mock = Minitest::Mock.new
           mock.expect(:code, "#{code}", [])
           mock.expect(:body, body, [])
+          mock.expect(:get_fields, 60, ["X-RateLimit-Limit"])
+          mock.expect(:get_fields, 57, ["X-RateLimit-Reset"])
+          mock.expect(:get_fields, 12, ["X-RateLimit-Remaining"])
           mock
         end
 
@@ -33,6 +36,7 @@ module Ondotori
           end
           assert_equal 400, e.code
           assert_equal "Bad Request", e.message
+          assert_equal 60, e.ratelimit.limit
         end
       end
     end
