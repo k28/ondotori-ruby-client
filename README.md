@@ -29,7 +29,7 @@ The first step is to create an API key.
 
 #### Web Client Examples
 
-```
+```ruby
 params = { "api-key" => "API Key you create", "login-id" => "tbxxxx", "login-pass" => "password"}
 client = Ondotori::WebAPI::Client.new(params)
 ```
@@ -45,14 +45,15 @@ client = Ondotori::WebAPI::Client.new(params)
 
 To get current readings, do the following.
 
-```
+```ruby
 response = client.current()
 ```
+
 #### Get Latest Data
 
 To get latest data, do the following.
 
-```
+```ruby
 response = client.latest_data("SERIAL")
 ```
 
@@ -60,7 +61,7 @@ response = client.latest_data("SERIAL")
 
 To get latest data (RTR500), do the following.
 
-```
+```ruby
 response = client.latest_data_rtr500(base: "BaseUnit Serial", remote: "RemoteUnit Serial")
 ```
 
@@ -68,26 +69,28 @@ response = client.latest_data_rtr500(base: "BaseUnit Serial", remote: "RemoteUni
 
 To get data (TR-7wb/nw/wf, TR4), do the following.
 
-```
+```ruby
 from = Time.now - (3600 * 24)
 to   = Time.now
 limit = 16000
 data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: 10)
 response = client.data("Device Serial", data_range: data_range)
 ```
+
 data_range parameter is optional.
 
 #### Get Data (RTR500 Series)
 
 To get data (RTR500 Series), do the following.
 
-```
+```ruby
 from = Time.now - (3600 * 24)
 to   = Time.now
 limit = 16000
 data_range = Ondotori::WebAPI::Api::DataRange.new(from: from, to: to, limit: 10)
 response = client.data_rtr500(base: "BaseUnit Serial", remote: "Device Serial", data_range: data_range)
 ```
+
 data_range parameter is optional.
 
 #### Error Handling
@@ -96,15 +99,19 @@ Ondotori Errors
 
 In case of parameter abnormality or error returned from the web server, the error will be raised.
 For example, to receive an authentication error from the server, use the following.
-```
+
+```ruby
 rescue Ondotori::WebAPI::Api::Errors::ResponseError => e
-  # puts "Response error #{e.message}"
+  puts "Response error #{e.message}"
 end
 ```
+
+If you reach the limit, you can check it with ResponseError.ratelimit.  
 All of these errors inherit from `Ondotori::WebAPI::Api::Errors::Error`, so you can handle or silence all errors if necessary:
-```
+
+```ruby
 rescue Ondotori::WebAPI::Api::Errors::Error => e
-  # puts "Response error #{e.message}"
+  puts "An error has occurred #{e.message}"
 end
 ```
 
