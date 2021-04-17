@@ -102,7 +102,7 @@ For example, to receive an authentication error from the server, use the followi
 
 ```ruby
 rescue Ondotori::WebAPI::Api::Errors::ResponseError => e
-  # puts "Response error #{e.message}"
+  puts "Response error #{e.message}"
 end
 ```
 
@@ -111,7 +111,7 @@ All of these errors inherit from `Ondotori::WebAPI::Api::Errors::Error`, so you 
 
 ```ruby
 rescue Ondotori::WebAPI::Api::Errors::Error => e
-  # puts "Response error #{e.message}"
+  puts "An error has occurred #{e.message}"
 end
 ```
 
