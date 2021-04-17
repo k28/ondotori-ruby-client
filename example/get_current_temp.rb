@@ -35,10 +35,10 @@ def main
     return
   end
 
-  ["api-key", "login-id", "login-pass"].each do |k|
-    if params[k] == nil
+  %w[api-key login-id login-pass].each do |k|
+    if params[k].nil?
       puts "parameter #{k} is nil. Please check #{WEB_STORAGE_ACCESS_INFO_PATH}"
-      return
+      exit
     end
   end
 
