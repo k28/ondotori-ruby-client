@@ -18,9 +18,7 @@ module Ondotori
 
         response = http.request_post(web_uri.path, params.to_json, make_headers)
         case response
-        when Net::HTTPSuccess
-          response
-        when Net::HTTPClientError, Net::HTTPServerError
+        when Net::HTTPSuccess, Net::HTTPClientError, Net::HTTPServerError
           response
         else
           # response.value raises Exception...

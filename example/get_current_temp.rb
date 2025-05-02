@@ -22,9 +22,7 @@ def load_params
     wss_access_info["login-pass"] = load_info["login-pass"]
     return wss_access_info
   end
-rescue SystemCallError => e
-  puts %(class=[#{e.class}] message=[#{e.message}])
-rescue IOError => e
+rescue SystemCallError, IOError => e
   puts %(class=[#{e.class}] message=[#{e.message}])
 end
 

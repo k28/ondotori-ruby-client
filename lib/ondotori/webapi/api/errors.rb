@@ -8,7 +8,7 @@ module Ondotori
           attr_reader :code
 
           def initialize(message, code = nil)
-            super message
+            super(message)
             @code = code
           end
         end
@@ -17,7 +17,7 @@ module Ondotori
           attr_reader :ratelimit
 
           def initialize(message, code, ratelimit)
-            super message, code
+            super(message, code)
             @ratelimit = ratelimit
           end
         end
@@ -30,7 +30,7 @@ module Ondotori
           attr_reader :detail
 
           def initialize(message, detail, code = nil)
-            super message, code
+            super(message, code)
             @detail = detail
           end
         end
