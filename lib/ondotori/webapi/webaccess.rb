@@ -16,7 +16,7 @@ module Ondotori
       attr_reader :params, :uri
 
       def initialize(timeout, on_access)
-        super timeout
+        super(timeout)
         @on_access = on_access
       end
 
