@@ -127,6 +127,27 @@ module Ondotori
           params
         end
       end
+
+      class AlertLogParams < ParamsBase
+        def initialize(param, base: "", remote: "")
+          super(param)
+          if base.empty? || remote.empty?
+            raise Ondotori::WebAPI::Api::Errors::InvaildParameter.new(
+              "alert-log need both the baseunit serial and remote unit serial.", 9990
+            )
+          end
+          @base_serial = base
+          @remote_serial = remote
+        end
+
+        def to_ondotori_param
+          params = super
+          params["base-serial"] = @base_serial
+          params["remote-serial"] = @remote_serial
+
+          params
+        end
+      end
     end
   end
 end
