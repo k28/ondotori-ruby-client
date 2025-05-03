@@ -93,6 +93,14 @@ response = client.data_rtr500(base: "BaseUnit Serial", remote: "Device Serial", 
 
 data_range parameter is optional.
 
+#### Get Alert log
+
+To get alert log, do the following.
+
+```ruby
+response = client.alert_log(base: "BaseUnit Serial", remote: "RemoteUnit Serial")
+```
+
 #### Error Handling
 
 Ondotori Errors
