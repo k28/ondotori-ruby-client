@@ -224,6 +224,42 @@ module Ondotori
           assert_equal limit, ondo_param["number"]
         end
       end
+
+      class AlertLogParamsTest < Minitest::Test
+        def test_success
+          param = Ondotori::WebAPI::Api::AlertLogParams.new(ParamsTest.make_param, base: "BS12345", remote: "SE12345")
+          refute_nil param
+        end
+
+        def test_failure
+          tests = [
+            { base: "",       remote: "" },
+            { base: "BA1234", remote: "" },
+            { base: "",       remote: "SE1234" }
+          ]
+
+          tests.each do |test|
+            e = assert_raises Ondotori::WebAPI::Api::Errors::InvaildParameter do
+              Ondotori::WebAPI::Api::AlertLogParams.new(ParamsTest.make_param, base: test[:base], remote: test[:remote])
+            end
+            assert_equal 9990, e.code
+          end
+        end
+
+        def test_to_ondotori_param
+          p = ParamsTest.make_param
+          param = Ondotori::WebAPI::Api::AlertLogParams.new(p, base: "BS12345", remote: "SE12345")
+          refute_nil param
+          ondo_param = param.to_ondotori_param
+
+          refute_nil ondo_param
+          assert_equal p.api_key, ondo_param["api-key"]
+          assert_equal p.login_id, ondo_param["login-id"]
+          assert_equal p.login_pass, ondo_param["login-pass"]
+          assert_equal "SE12345", ondo_param["remote-serial"]
+          assert_equal "BS12345", ondo_param["base-serial"]
+        end
+      end
     end
   end
 end
