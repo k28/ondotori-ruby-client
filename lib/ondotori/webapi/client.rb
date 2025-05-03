@@ -41,6 +41,11 @@ module Ondotori
         access_server(param, "#{base_uri}data-rtr500")
       end
 
+      def alert_log(base: "", remote: "")
+        param = Api::AlertLogParams.new(@param, base: base, remote: remote)
+        access_server(param, "#{base_uri}alert")
+      end
+
       def base_uri
         return @uri unless @uri.empty?
 
